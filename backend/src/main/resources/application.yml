@@ -1,0 +1,35 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/clinical_appointments}
+    username: ${SPRING_DATASOURCE_USERNAME:clinical}
+    password: ${SPRING_DATASOURCE_PASSWORD:clinical}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: ${SPRING_MAIL_HOST:mailhog}
+    port: ${SPRING_MAIL_PORT:1025}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  security:
+    require-ssl: ${APP_REQUIRE_SSL:false}
+    jwt:
+      secret: ${APP_JWT_SECRET:ZmFrZS1jbGluaWNhbC1hcHBvaW50bWVudC1zZWNyZXQta2V5LW11c3QtYmUtbG9uZy1lbm91Z2gtMTIzNDU2}
+      expiration-seconds: ${APP_JWT_EXPIRATION_SECONDS:3600}

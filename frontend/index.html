@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clinical Appointment System</title>
+    <link rel="stylesheet" href="./preview.css" />
+  </head>
+  <body>
+    <div class="preview-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">CAS</div>
+          <div>
+            <p class="eyebrow">Advanced Healthcare Platform</p>
+            <h1>Clinical Appointment System</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost-button" type="button" data-action="reset-demo">Restore Records</button>
+        </div>
+      </header>
+
+      <nav class="route-bar" aria-label="Preview navigation">
+        <a href="#/" class="route-link" data-route="/">Home</a>
+        <a href="#/patient" class="route-link" data-route="/patient">Patient</a>
+        <a href="#/doctor" class="route-link" data-route="/doctor">Doctor</a>
+        <a href="#/admin" class="route-link" data-route="/admin">Admin</a>
+      </nav>
+
+      <main id="app" class="app"></main>
+    </div>
+
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+    <script src="./preview.js" defer></script>
+  </body>
+</html>

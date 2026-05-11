@@ -1,0 +1,17 @@
+node_modules
+.next
+dist
+build
+.idea
+.vscode
+.env
+.env.local
+.env.production
+coverage
+target
+*.log
+frontend/node_modules
+frontend/.next
+backend/target
+postgres-data
+.DS_Store
