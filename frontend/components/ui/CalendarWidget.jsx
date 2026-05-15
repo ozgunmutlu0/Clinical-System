@@ -22,7 +22,8 @@ function buildMonthDays(date) {
   return days;
 }
 
-export function CalendarWidget({ selectedDate, onDateChange }) {
+export function CalendarWidget({ selectedDate, onDateChange, availableDateKeys = [] }) {
+  const availableSet = new Set(availableDateKeys);
   const monthDays = buildMonthDays(selectedDate);
   const monthLabel = selectedDate.toLocaleString("en-US", {
     month: "long",
@@ -52,24 +53,39 @@ export function CalendarWidget({ selectedDate, onDateChange }) {
         ))}
       </div>
       <div className="calendar__grid">
-        {monthDays.map((date, index) =>
-          date ? (
+        {monthDays.map((date, index) => {
+          if (!date) {
+            return (
+              <span key={`empty-${index}`} className="calendar__day calendar__day--empty" />
+            );
+          }
+
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          const key = `${year}-${month}-${day}`;
+          const hasSlots = availableSet.has(key);
+          const isSelected = date.toDateString() === selectedDate.toDateString();
+          const className = [
+            "calendar__day",
+            isSelected ? "is-selected" : "",
+            hasSlots ? "has-slots" : ""
+          ]
+            .filter(Boolean)
+            .join(" ");
+
+          return (
             <button
-              key={date.toISOString()}
+              key={key}
               type="button"
-              className={
-                date.toDateString() === selectedDate.toDateString()
-                  ? "calendar__day is-selected"
-                  : "calendar__day"
-              }
+              className={className}
               onClick={() => onDateChange(date)}
+              title={hasSlots ? "Slots available" : "No slots"}
             >
               {date.getDate()}
             </button>
-          ) : (
-            <span key={`empty-${index}`} className="calendar__day calendar__day--empty" />
-          )
-        )}
+          );
+        })}
       </div>
     </div>
   );

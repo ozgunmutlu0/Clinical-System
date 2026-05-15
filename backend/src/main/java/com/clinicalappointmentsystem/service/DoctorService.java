@@ -87,6 +87,11 @@ public class DoctorService {
             .toList();
     }
 
+    public List<LocalDate> findAvailableDates(Long doctorId, LocalDate from, LocalDate to) {
+        findEntity(doctorId);
+        return availabilitySlotRepository.findAvailableDates(doctorId, from, to);
+    }
+
     private void apply(Doctor doctor, DoctorUpsertRequest request) {
         doctor.setUser(resolveLinkedUser(doctor.getUser(), request));
         doctor.setName(request.name());

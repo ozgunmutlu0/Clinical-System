@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { HomeDoctors } from "@/components/home/HomeDoctors";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { HeroIllustration } from "@/components/site/HeroIllustration";
-import { demoDoctors, demoMetrics, demoHighlights, demoTestimonials } from "@/data/mockData";
+import { demoHighlights, demoMetrics, demoTestimonials } from "@/data/mockData";
 
 function MetricCard({ item }) {
   return (
@@ -23,25 +24,6 @@ function HighlightCard({ item }) {
   );
 }
 
-function DoctorPreview({ doctor }) {
-  return (
-    <GlassCard className="doctor-preview">
-      <div className="doctor-preview__header">
-        <div>
-          <span className="badge badge-soft">{doctor.specialty}</span>
-          <h3>{doctor.name}</h3>
-        </div>
-        <div className="avatar">{doctor.initials}</div>
-      </div>
-      <p>{doctor.bio}</p>
-      <div className="doctor-preview__meta">
-        <span>{doctor.department}</span>
-        <span>{doctor.workingHours}</span>
-      </div>
-    </GlassCard>
-  );
-}
-
 export default function HomePage() {
   return (
     <main className="page-shell">
@@ -50,23 +32,22 @@ export default function HomePage() {
           <span className="pill pill-accent">Enterprise Health Solutions</span>
           <h1>Clinical Appointment System</h1>
           <p>
-            Book appointments, manage doctor schedules, control availability rules, and keep
-            every clinic interaction visible from one responsive platform designed around the
-            mint and teal visual language of your Canva reference.
+            Book real appointments with live doctors and slots from PostgreSQL. Sign in or create
+            a patient account to get started.
           </p>
           <div className="hero__actions">
             <Link href="/patient" className="button-link button-link--primary">
               Book Appointment
             </Link>
-            <Link href="/admin" className="button-link button-link--secondary">
-              Admin Panel
+            <Link href="/patient" className="button-link button-link--secondary">
+              Login / Register
             </Link>
           </div>
           <div className="hero__chips">
             <span>Patients</span>
             <span>Doctors</span>
             <span>Administrators</span>
-            <span>JWT Security</span>
+            <span>Live API</span>
           </div>
         </div>
         <HeroIllustration />
@@ -82,7 +63,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Core Experience"
           title="Everything your clinic team needs"
-          description="Reusable interface blocks keep the product coherent across patient, doctor, and admin workflows."
+          description="Patient booking connects to the Spring Boot API and PostgreSQL database."
         />
         <div className="card-grid card-grid--triple">
           {demoHighlights.map((item) => (
@@ -94,28 +75,23 @@ export default function HomePage() {
       <section className="content-section">
         <SectionHeading
           eyebrow="Featured Specialists"
-          title="Doctors available for appointment booking"
-          description="Hero styling and glassmorphism cards follow the visual cues from the Canva site while staying application-focused."
+          title="Doctors available for booking"
+          description="Loaded from GET /api/doctors — real database records."
         />
-        <div className="card-grid card-grid--triple">
-          {demoDoctors.slice(0, 3).map((doctor) => (
-            <DoctorPreview key={doctor.id} doctor={doctor} />
-          ))}
-        </div>
+        <HomeDoctors />
       </section>
 
       <section className="content-section two-column">
         <GlassCard className="story-card">
           <SectionHeading
-            eyebrow="Why This Stack"
-            title="Built for scale and clean separation"
-            description="Next.js handles responsive UI and route structure while Spring Boot provides RBAC, slot generation, and secure REST APIs."
+            eyebrow="Demo accounts"
+            title="Try the live system"
+            description="Use these accounts on the Book Appointment page."
           />
           <ul className="check-list">
-            <li>Responsive pages for desktop, tablet, and mobile</li>
-            <li>Accessible forms, keyboard-friendly modals, hover and focus states</li>
-            <li>Bulk slot generation, overlap prevention, and role-based authorization</li>
-            <li>Docker, Nginx, PostgreSQL, CI/CD, and monitoring support</li>
+            <li>Patient: patient@clinic.local / password</li>
+            <li>Doctor: doctor@clinic.local / password</li>
+            <li>Admin: admin@clinic.local / password</li>
           </ul>
         </GlassCard>
 
@@ -123,7 +99,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="User Feedback"
             title="Designed to communicate clearly"
-            description="Every dashboard includes loading, validation, error, and success states, so users always know what is happening."
+            description="Validation, errors, and success states on every workflow."
           />
           <div className="testimonial-stack">
             {demoTestimonials.map((item) => (

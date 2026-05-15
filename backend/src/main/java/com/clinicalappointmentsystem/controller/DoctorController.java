@@ -38,4 +38,15 @@ public class DoctorController {
     ) {
         return doctorService.findAvailableSlots(doctorId, date);
     }
+
+    @GetMapping("/{doctorId}/available-dates")
+    public List<LocalDate> getAvailableDates(
+        @PathVariable Long doctorId,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+    ) {
+        LocalDate start = from != null ? from : LocalDate.now();
+        LocalDate end = to != null ? to : start.plusDays(60);
+        return doctorService.findAvailableDates(doctorId, start, end);
+    }
 }

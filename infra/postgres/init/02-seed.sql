@@ -1,8 +1,8 @@
 INSERT INTO users (id, name, email, password, phone, role, enabled)
 VALUES
-    (1, 'Admin User', 'admin@clinic.local', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+905550000001', 'ADMIN', TRUE),
-    (2, 'Dr. Selin Demir', 'doctor@clinic.local', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+905550000002', 'DOCTOR', TRUE),
-    (3, 'Ayse Yilmaz', 'patient@clinic.local', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+905550000003', 'PATIENT', TRUE)
+    (1, 'Admin User', 'admin@clinic.local', '$2b$10$Nu8BlA3CAb5bmsJ9Sblw1e5LHbDu5.7N0SW1X0Aqz31U7qHfqNw42', '+905550000001', 'ADMIN', TRUE),
+    (2, 'Dr. Selin Demir', 'doctor@clinic.local', '$2b$10$Nu8BlA3CAb5bmsJ9Sblw1e5LHbDu5.7N0SW1X0Aqz31U7qHfqNw42', '+905550000002', 'DOCTOR', TRUE),
+    (3, 'Ayse Yilmaz', 'patient@clinic.local', '$2b$10$Nu8BlA3CAb5bmsJ9Sblw1e5LHbDu5.7N0SW1X0Aqz31U7qHfqNw42', '+905550000003', 'PATIENT', TRUE)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO doctors (id, user_id, name, specialty, working_hours, availability_rules, active)

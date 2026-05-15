@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface AvailabilitySlotRepository extends JpaRepository<AvailabilitySlot, Long> {
 
@@ -16,4 +18,18 @@ public interface AvailabilitySlotRepository extends JpaRepository<AvailabilitySl
     boolean existsByDoctor_IdAndDateAndTime(Long doctorId, LocalDate date, LocalTime time);
 
     void deleteByDateBefore(LocalDate date);
+
+    @Query("""
+        SELECT DISTINCT s.date FROM AvailabilitySlot s
+        WHERE s.doctor.id = :doctorId
+          AND s.booked = false
+          AND s.date >= :fromDate
+          AND s.date <= :toDate
+        ORDER BY s.date ASC
+        """)
+    List<LocalDate> findAvailableDates(
+        @Param("doctorId") Long doctorId,
+        @Param("fromDate") LocalDate fromDate,
+        @Param("toDate") LocalDate toDate
+    );
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
@@ -49,11 +50,11 @@ public class AppointmentService {
         if (currentUser.getRole().name().equals("DOCTOR")) {
             return appointmentRepository.findByDoctor_IdOrderByDateAscTimeAsc(resolveDoctorIdForUser(currentUser)).stream().map(this::toResponse).toList();
         }
-        return appointmentRepository.findAll().stream().map(this::toResponse).toList();
+        return appointmentRepository.findAllWithDetails().stream().map(this::toResponse).toList();
     }
 
     public AppointmentResponse findById(Long appointmentId) {
-        Appointment appointment = appointmentRepository.findById(appointmentId)
+        Appointment appointment = appointmentRepository.findByIdWithDetails(appointmentId)
             .orElseThrow(() -> new NotFoundException("Appointment not found"));
         validateAccessToAppointment(appointment, currentUser());
         return toResponse(appointment);
@@ -99,7 +100,7 @@ public class AppointmentService {
 
     @Transactional
     public AppointmentResponse updateStatus(Long appointmentId, AppointmentStatus status) {
-        Appointment appointment = appointmentRepository.findById(appointmentId)
+        Appointment appointment = appointmentRepository.findByIdWithDetails(appointmentId)
             .orElseThrow(() -> new NotFoundException("Appointment not found"));
         User currentUser = currentUser();
         validateStatusChange(appointment, currentUser, status);
@@ -124,7 +125,7 @@ public class AppointmentService {
         User currentUser = currentUser();
         if (currentUser.getRole() == Role.ADMIN) {
             if (query == null || query.isBlank()) {
-                return appointmentRepository.findAll().stream().map(this::toResponse).toList();
+                return appointmentRepository.findAllWithDetails().stream().map(this::toResponse).toList();
             }
             return appointmentRepository
                 .searchByDoctorOrPatient(query)
@@ -142,7 +143,7 @@ public class AppointmentService {
 
     @Transactional
     public void delete(Long appointmentId) {
-        Appointment appointment = appointmentRepository.findById(appointmentId)
+        Appointment appointment = appointmentRepository.findByIdWithDetails(appointmentId)
             .orElseThrow(() -> new NotFoundException("Appointment not found"));
         User currentUser = currentUser();
         validateAccessToAppointment(appointment, currentUser);
