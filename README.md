@@ -1,5 +1,10 @@
 # Clinical Appointment System
 
+**Proje bağlantıları**
+
+- Jira: https://abdullahcari.atlassian.net/jira/software/projects/CP4242/boards/2?jql=assignee%20%3D%20empty
+- Microsoft Teams: https://teams.live.com/l/invite/FAABpLcYActxANkJQI
+
 Full-stack bir klinik randevu sistemi monorepo'su. Yapı, verdiğin teknik gereksinimlere göre `Next.js + Spring Boot + PostgreSQL + Docker + Nginx + Prometheus/Grafana` ekseninde kuruldu ve Canva referansındaki mint/teal, cam efekti ve hero odaklı dil temel alınarak tasarlandı.
 
 ## En Hızlı Çalıştırma
